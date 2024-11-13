@@ -1,0 +1,10 @@
+ _____                  _ _ 
+|_   _|   _ _ __   __ _| (_)
+  | || | | | '_ \ / _` | | |
+  | || |_| | | | | (_| | | |
+  |_| \__,_|_| |_|\__, |_|_|
+                     |_|    
+                     --HoangQuangTung
+-------------------------------------------------
+SYNTAX: tqli -help : To show basic help message
+        tqli -exit : To exit program

