@@ -65,6 +65,9 @@ def scan_func():
                 #Mode Custom
                 print("\t" + INFO_MESSAGE + "Mode: Custom")
                 scan.scan_vulnerability(url, 'Custom')
+            elif n_mode == 4:
+                print("\t" + INFO_MESSAGE + "Mode: Custom")
+                scan.scan_vulnerability(url, 'Error Based')
         except ValueError:
             print("\t" + WARNING_MESSAGE + "Invalid mode. Please choose again.")
             continue

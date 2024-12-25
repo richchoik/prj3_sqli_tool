@@ -152,10 +152,25 @@ def scan_vulnerability(url, mode='Custom'):
                     cntcase = 0
                     cntline += 1
                     line = line.rstrip('\n')
-                    for h in header:
-                        data = {h: line}
-                    res = requests.post(url, data=data, allow_redirects=False)
-                    if 300 <= res.status_code < 400:
+                    data = {}  # Khởi tạo lại data cho mỗi payload
+                    print(f'\rLOADING [{cntline}/155]', end='', flush=True)
+                    for input_tag in formDetail["inputs"]:
+                        data[input_tag['name']] = input_tag["value"] + line  # Cập nhật data thay vì ghi đè
+                        #print(data)
+                        print()
+                    if method == "post":
+                        res = requests.post(url, data=data)
+                        #print(f"Payload: {data}")
+                        #print(f"Response Status Code: {res.status_code}")
+                        #print_pretty_html(res.content)
+                        #print()
+                    elif method == "get":
+                        res = requests.get(url, params=data)
+                        #print(f"Payload: {data}")
+                        #print(f"Response Status Code: {res.status_code}")
+                        #print_pretty_html(res.content)
+                        #print()
+                    if 200 <= res.status_code < 300:
                         cntcase += 1
                     for word in wordlist:
                         if word in res.text.lower():
@@ -163,11 +178,17 @@ def scan_vulnerability(url, mode='Custom'):
                             break
                     if cntcase >= 2:
                         print(f'\r', end='', flush=True)
-                        print(f"executed with payload: {line}\tresponse code:  {res.status_code}")
+                        print(f"executed with payload: {line}\tresponse code: {res.status_code}")
+                        break
                     elif cntcase == 1:
                         print(f'\r', end='', flush=True)
-                        print(f"may be execute with payload: {line}\tresponse code:  {res.status_code}")
-                    print(f'\rLOADING [{cntline}/154]', end='', flush=True)
+                        print(f"may be execute with payload: {line}\tresponse code: {res.status_code}")
+                        break
+                print()
+                print(f'\rDONE')
+            with open('banner.txt', 'r') as file:
+                content = file.read()
+            print(content)
 
             with open('timeBasedPayLoad.txt', 'r') as filepayload:
                 cntline = 0
@@ -187,3 +208,9 @@ def scan_vulnerability(url, mode='Custom'):
                         print(f"maybe execute with payload: {line}\t time out: 6")
                     print(f'\rLOADING [{cntline}/98]', end='', flush=True)
             print(f'\rDONE')
+
+        #Error-based Mode
+        if mode == "Error Based":
+            with open('banner.txt', 'r') as file:
+                content = file.read()
+            print(content)
