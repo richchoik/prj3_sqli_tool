@@ -71,6 +71,8 @@ def scan_vulnerability(url, mode='Custom'):
         if mode == 'Time Based':
             with open('timeBasedPayload.txt', 'r') as filepayload:
                 cntline = 0
+                total_payloads = sum(1 for _ in filepayload)  # Đếm số lượng dòng trong file
+                filepayload.seek(0)  # Quay lại đầu file để bắt đầu đọc
                 for line in filepayload:
                     cntline += 1
                     line = line.rstrip('\n')
@@ -81,16 +83,32 @@ def scan_vulnerability(url, mode='Custom'):
                             res = requests.post(url, data=data, timeout=6)
                         elif method == "get":
                             res = requests.get(url, params=data, timeout=6)
+                        
                         timeres = res.elapsed.total_seconds()
                         if timeres > 5:
                             print(f'\r', end='', flush=True)
-                            print(f"executed with payload: {line}\ttime to response: {timeres}")
+                            print(f"Executed with payload: {line}\tResponse time: {timeres} seconds")
+                            # Hỏi người dùng có muốn tiếp tục
+                            choice = input("Do you want to continue with the next payload? [Y/N, default=N]: ").strip().upper()
+                            if choice == 'Y':
+                                print("Continuing with the next payload...")
+                            else:
+                                print("Stopping further payloads.")
+                                return  # Dừng hẳn chương trình
                     except requests.exceptions.Timeout:
                         print(f'\r', end='', flush=True)
-                        print(f"maybe execute with payload: {line}\t time out: 6")
-                    print(f'\rLOADING [{cntline}/98]', end='', flush=True)
-                print(f'\rDONE')
-
+                        print(f"Possible execution with payload: {line}\tTimeout occurred at 6 seconds")
+                        # Hỏi người dùng có muốn tiếp tục
+                        choice = input("Do you want to continue with the next payload? [Y/N, default=N]: ").strip().upper()
+                        if choice == 'Y':
+                            print("Continuing with the next payload...")
+                        else:
+                            print("Stopping further payloads.")
+                            return  # Dừng hẳn chương trình
+                    print(f'\rLOADING [{cntline}/{total_payloads}]', end='', flush=True)
+                print('\r' + ' ' * 30, end='\r', flush=True)  # Xóa dòng tiến trình
+                print("DONE")
+                
         #Mode normal
         if mode == 'Normal':
             with open('normalPayload.txt', 'r') as filepayload:
@@ -190,15 +208,20 @@ def scan_vulnerability(url, mode='Custom'):
                 content = file.read()
             print(content)
 
-            with open('timeBasedPayLoad.txt', 'r') as filepayload:
+            with open('timeBasedPayload.txt', 'r') as filepayload:
                 cntline = 0
+                total_payloads = sum(1 for _ in filepayload)  # Đếm số lượng dòng trong file
+                filepayload.seek(0)  # Quay lại đầu file để bắt đầu đọc
                 for line in filepayload:
                     cntline += 1
                     line = line.rstrip('\n')
-                    for h in header:
-                        data = {h: line}
+                    for input_tag in formDetail["inputs"]:
+                        data = {input_tag['name']: input_tag["value"] + line}
                     try:
-                        res = requests.post(url, data=data, timeout=6)
+                        if method == "post":
+                            res = requests.post(url, data=data, timeout=6)
+                        elif method == "get":
+                            res = requests.get(url, params=data, timeout=6)
                         timeres = res.elapsed.total_seconds()
                         if timeres > 5:
                             print(f'\r', end='', flush=True)
@@ -206,11 +229,100 @@ def scan_vulnerability(url, mode='Custom'):
                     except requests.exceptions.Timeout:
                         print(f'\r', end='', flush=True)
                         print(f"maybe execute with payload: {line}\t time out: 6")
-                    print(f'\rLOADING [{cntline}/98]', end='', flush=True)
-            print(f'\rDONE')
+                    print(f'\rLOADING [{cntline}/{total_payloads}]', end='', flush=True)
+                print('\r' + ' ' * 30, end='\r', flush=True)  # Xóa dòng tiến trình
+                print("DONE")
 
-        #Error-based Mode
+        # Error-based Mode
         if mode == "Error Based":
+            with open('errorBasedPayload.txt', 'r') as filepayload:
+                cntline = 0
+                for line in filepayload:
+                    cntline += 1
+                    line = line.rstrip('\n')
+                    data = {}  # Khởi tạo lại data cho mỗi payload
+                    print(f'\rLOADING [{cntline}/155]', end='', flush=True)
+                    for input_tag in formDetail["inputs"]:
+                        data[input_tag['name']] = input_tag["value"] + line
+                    try:
+                        if method == "post":
+                            res = requests.post(url, data=data)
+                        elif method == "get":
+                            res = requests.get(url, params=data)
+                        # Kiểm tra các lỗi phổ biến trong phản hồi
+                        error_keywords = [
+                            "syntax error", "unexpected", "warning", "mysql", "sql", 
+                            "database error", "stack trace", "ORA-", "unhandled exception"
+                        ]
+                        for keyword in error_keywords:
+                            if keyword.lower() in res.text.lower():
+                                print(f'\r', end='', flush=True)
+                                print(f"Potential vulnerability detected with payload: {line}\tResponse contains error: {keyword}")
+                                # Hỏi người dùng có muốn tiếp tục với payload tiếp theo không
+                                choice = input("Do you want to continue with the next payload? [Y/N, default=N]: ").strip().upper()
+                                if choice == 'Y':
+                                    print("Continuing with the next payload...")
+                                else:
+                                    print("Stopping further payloads.")
+                                    return  # Dừng hẳn chương trình
+                                break
+                    except requests.RequestException as e:
+                        print(f'\r', end='', flush=True)
+                        print(f"Request failed with payload: {line}\tError: {e}")
+                print(f'\rDONE')
+
+        # Mode Blind SQL Injection
+        if mode == "Blind":
+            with open('blindPayload.txt', 'r') as filepayload:
+                cntline = 0
+                for line in filepayload:
+                    cntline += 1
+                    line = line.rstrip('\n')
+                    data = {}  # Khởi tạo lại data cho mỗi payload
+                    print(f'\rLOADING [{cntline}/100]', end='', flush=True)
+                    for input_tag in formDetail["inputs"]:
+                        # Chèn payload vào mỗi input field
+                        data[input_tag['name']] = input_tag["value"] + line
+                    
+                    try:
+                        if method == "post":
+                            res = requests.post(url, data=data, timeout=6)
+                        elif method == "get":
+                            res = requests.get(url, params=data, timeout=6)
+                        
+                        # Kiểm tra phản hồi có thể gợi ý tính dễ tổn thương
+                        if "congratulations" in res.text.lower() or "you are right" in res.text.lower():
+                            print(f'\r', end='', flush=True)
+                            print(f"Blind SQL Injection executed with payload: {line}")
+                            # Hỏi người dùng có muốn tiếp tục với payload tiếp theo không
+                            choice = input("Do you want to continue with the next payload? [Y/N, default=N]: ").strip().upper()
+                            if choice == 'Y':
+                                print("Continuing with the next payload...")
+                            else:
+                                print("Stopping further payloads.")
+                                return  # Dừng hẳn chương trình
+                        elif "error" in res.text.lower():
+                            print(f'\r', end='', flush=True)
+                            print(f"Potential issue with payload: {line}\tResponse contains error message.")
+                            # Hỏi người dùng có muốn tiếp tục với payload tiếp theo không
+                            choice = input("Do you want to continue with the next payload? [Y/N, default=N]: ").strip().upper()
+                            if choice == 'Y':
+                                print("Continuing with the next payload...")
+                            else:
+                                print("Stopping further payloads.")
+                                return  # Dừng hẳn chương trình
+                    except requests.exceptions.Timeout:
+                        print(f'\r', end='', flush=True)
+                        print(f"Blind SQL Injection payload may have executed: {line} (timeout)")
+                        # Hỏi người dùng có muốn tiếp tục với payload tiếp theo không
+                        choice = input("Do you want to continue with the next payload? [Y/N, default=N]: ").strip().upper()
+                        if choice == 'Y':
+                            print("Continuing with the next payload...")
+                        else:
+                            print("Stopping further payloads.")
+                            return  # Dừng hẳn chương trình
+                print()
+                print(f'\rDONE')
             with open('banner.txt', 'r') as file:
                 content = file.read()
             print(content)

